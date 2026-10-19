@@ -1,0 +1,163 @@
+/* OITA TRAVEL JOURNAL — visual refresh only.
+   HTML content, DOM structure and JavaScript behavior remain unchanged. */
+:root {
+  color-scheme: light;
+  --ink: #253447;
+  --muted: #65717b;
+  --paper: #faf8f3;
+  --surface: #ffffff;
+  --navy: #203c50;
+  --navy-deep: #142d40;
+  --gold: #b28a51;
+  --line: #e8e4dc;
+  --shadow: 0 14px 40px rgba(27, 46, 59, .07);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 clamp(18px, 5vw, 64px) 100px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+  font-size: 15px;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 360px;
+  z-index: -1;
+  background: linear-gradient(140deg, #18394e 0%, #2b5262 60%, #52736f 100%);
+}
+h1 {
+  margin: 0 calc(-1 * clamp(18px, 5vw, 64px));
+  padding: 85px 24px 8px;
+  color: #fff;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(29px, 5vw, 52px);
+  font-weight: 600;
+  letter-spacing: .12em;
+  line-height: 1.4;
+  text-align: center;
+  text-shadow: 0 2px 18px rgba(0,0,0,.1);
+}
+body > h2:first-of-type {
+  margin: 0 calc(-1 * clamp(18px, 5vw, 64px));
+  padding: 0 20px 93px;
+  color: #e7d5b6;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: .24em;
+}
+body > h2:not(:first-of-type) {
+  position: relative;
+  margin: 44px 0 22px;
+  padding-left: 20px;
+  color: var(--navy-deep);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(24px, 3.4vw, 32px);
+  font-weight: 600;
+  letter-spacing: .09em;
+  line-height: 1.5;
+}
+body > h2:not(:first-of-type)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .2em;
+  bottom: .2em;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--gold);
+}
+hr { border: 0; border-top: 1px solid var(--line); margin: 44px 0; }
+body > hr:first-of-type { margin-top: 0; border-color: transparent; }
+h3 { margin: 0 0 13px; font-size: 19px; line-height: 1.6; letter-spacing: .025em; color: var(--navy-deep); }
+h5 { margin: 7px 0; font-size: 14px; font-weight: 500; color: var(--muted); line-height: 1.85; }
+p { margin: 5px 0; line-height: 1.9; }
+.route-tabs, .spot-tabs { display: flex; gap: 10px; margin-bottom: 16px; }
+.route-btn, .spot-btn {
+  appearance: none;
+  border: 1px solid #e2e4e4;
+  background: #fff;
+  color: var(--muted);
+  border-radius: 12px;
+  padding: 12px 15px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.route-btn { flex: 1; }
+.spot-btn { flex: 1; min-width: 0; padding: 12px 5px; white-space: nowrap; }
+.route-btn:hover, .spot-btn:hover { border-color: var(--gold); color: var(--navy); }
+.route-btn.active, .spot-btn.active {
+  color: #fff;
+  background: var(--navy);
+  border-color: var(--navy);
+  box-shadow: 0 5px 13px rgba(32,60,80,.15);
+}
+.route-btn:focus-visible, .spot-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.route-content, .spot-content {
+  padding: clamp(20px, 4vw, 34px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+/* Preserve the existing hidden-attribute tab switching. */
+.route-content[hidden], .spot-content[hidden] { display: none !important; }
+.route-content p { padding: 12px 0 8px 14px; border-left: 2px solid #d7c19c; line-height: 2.1; font-variant-numeric: tabular-nums; }
+body > h3 { margin: -10px 0 16px; color: var(--muted); font-size: 16px; font-weight: 600; letter-spacing: .1em; }
+.photo-slider {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 12px 2px 18px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #d2c3ad transparent;
+}
+.photo-slider img {
+  display: block;
+  flex: 0 0 80%;
+  width: 80%;
+  height: clamp(195px, 32vw, 290px);
+  object-fit: cover;
+  border-radius: 13px;
+  scroll-snap-align: start;
+  box-shadow: 0 5px 15px rgba(20,45,64,.1);
+}
+.spot-content > div + div { margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--line); }
+.spot-content > div > h3 { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 22px; margin-bottom: 10px; }
+.spot-content > div > p { color: var(--muted); font-size: 14px; }
+.spot-content > div > p:first-of-type { color: var(--ink); margin-bottom: 12px; font-size: 15px; }
+.spot-content .photo-slider { margin-top: 10px; }
+@media (max-width: 600px) {
+  body { font-size: 14px; padding-bottom: 60px; }
+  body::before { height: 290px; }
+  h1 { padding-top: 67px; font-size: clamp(25px, 7vw, 35px); }
+  body > h2:first-of-type { padding-bottom: 78px; font-size: 13px; }
+  body > h2:not(:first-of-type) { margin-top: 32px; }
+  hr { margin: 32px 0; }
+  .route-tabs, .spot-tabs { gap: 6px; }
+  .route-btn, .spot-btn { border-radius: 9px; font-size: 12px; }
+  .spot-btn { padding: 11px 2px; }
+  .route-content h3 { font-size: 16px; }
+  .photo-slider img { flex-basis: 86%; width: 86%; height: 210px; }
+  .spot-content > div > h3 { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .route-btn, .spot-btn { transition: none; }
+}
