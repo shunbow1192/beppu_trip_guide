@@ -388,3 +388,22 @@ body > h3 { margin: -10px 0 16px; color: var(--muted); font-size: 16px; font-wei
     font-size: 12px;
   }
 }
+
+
+/* 往路：小倉駅だけゴールド */
+#outbound .train-point::before {
+  background: #203c50;
+}
+
+#outbound .train-stop:last-child .train-point::before {
+  background: #b28a51;
+}
+
+/* 復路：小倉駅だけゴールド */
+#return .train-point::before {
+  background: #203c50;
+}
+
+#return .train-stop:first-child .train-point::before {
+  background: #b28a51;
+}
