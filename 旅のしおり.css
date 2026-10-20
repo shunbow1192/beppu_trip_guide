@@ -161,3 +161,15 @@ body > h3 { margin: -10px 0 16px; color: var(--muted); font-size: 16px; font-wei
   html { scroll-behavior: auto; }
   .route-btn, .spot-btn { transition: none; }
 }
+
+.address-link {
+    color: #203c50;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid #b28a51;
+    transition: opacity 0.2s ease;
+}
+
+.address-link:hover {
+    opacity: 0.7;
+}
