@@ -17,12 +17,89 @@
             <button class="route-btn" data-route="return">復路</button>
         </div>
         <div class="route-content" id="outbound">
-            <h3>往路｜新大阪駅、京都駅、新神戸駅 → 小倉駅</h3>
-            <p>&nbsp; 8:26　　京都駅発<br>　　　　　|<br>&nbsp; 8:41　　新大阪発<br>　　　　　|<br>&nbsp; 8:54　　新神戸駅発<br>　　　　　|<br>　　　　　|<br>10:53　　小倉駅着</p>
+            <h3>往路｜京都・新大阪・新神戸 → 小倉</h3>
+            <h3>JR新幹線のぞみ3号(N700系)</h3>
+            <div class="train-timeline">
+                <div class="train-stop">
+                    <div class="train-time">08:26</div>
+                    <div class="train-point"></div>
+                    <div class="train-info">
+                        <strong>京都駅</strong>
+                        <span>出発</span>
+                        <small>乗車ホーム：13番線</small>
+                    </div>
+                </div>
+                <div class="train-stop">
+                    <div class="train-time">08:41</div>
+                    <div class="train-point"></div>
+                    <div class="train-info">
+                        <strong>新大阪駅</strong>
+                        <span>出発</span>
+                        <small>乗車ホーム：22番線</small>
+                    </div>
+                </div>
+                <div class="train-stop">
+                    <div class="train-time">08:54</div>
+                    <div class="train-point"></div>
+                    <div class="train-info">
+                        <strong>新神戸駅</strong>
+                        <span>出発</span>
+                        <small>乗車ホーム：1番線</small>
+                    </div>
+                </div>
+                <div class="train-stop last">
+                    <div class="train-time">10:53</div>
+                    <div class="train-point"></div>
+                    <div class="train-info">
+                        <strong>小倉駅</strong>
+                        <span>到着</span>
+                        <small>到着ホーム：12番線</small>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="route-content" id="return" hidden>
-            <h3>復路｜小倉駅 → 新神戸駅、新大阪駅、京都駅</h3>
-            <p>18:34　　小倉駅発<br>　　　　　|<br>　　　　　|<br>20:33　　新神戸駅着<br>　　　　　|<br>20:46　　新大阪駅着<br>　　　　　|<br>21:01　　京都駅着</p>
+            <h3>復路｜小倉 → 新神戸・新大阪・京都</h3>
+            <h3>JR新幹線のぞみ60号(N700系)</h3>
+            <div class="train-timeline">
+                <div class="train-stop">
+                    <div class="train-time">18:34</div>
+                    <div class="train-point"></div>
+                    <div class="train-info">
+                        <strong>小倉駅</strong>
+                        <span>出発</span>
+                        <small>乗車ホーム：13番線</small>
+                    </div>
+                </div>
+                <div class="train-stop">
+                    <div class="train-time">20:33</div>
+                    <div class="train-point"></div>
+                    <div class="train-info">
+                        <strong>新神戸駅</strong>
+                        <span>到着</span>
+                        <small>到着ホーム：2番線</small>
+                    </div>
+                </div>
+                <div class="train-stop">
+                    <div class="train-time">20:46</div>
+                    <div class="train-point"></div>
+                    <div class="train-info">
+                        <strong>新大阪駅</strong>
+                        <span>到着</span>
+                        <small>到着ホーム：26番線</small>
+                    </div>
+                </div>
+                <div class="train-stop last">
+                    <div class="train-time">21:01</div>
+                    <div class="train-point"></div>
+                    <div class="train-info">
+                        <strong>京都駅</strong>
+                        <span>到着</span>
+                        <small>到着ホーム：12番線</small>
+                    </div>
+                </div>
+            </div>
         </div>
         <hr>
         <h2>ヴィラ</h2>
@@ -51,6 +128,7 @@
                 <button class="spot-btn" data-category="ramen">ラーメン</button>
                 <button class="spot-btn" data-category="onsen">温泉</button>
                 <button class="spot-btn" data-category="sightseeing">観光</button>
+                <button class="spot-btn" data-category="favorites">♥ お気に入り</button>
             </div>
             <div class="spot-content" id="gourmet">
                 <div>
@@ -670,6 +748,9 @@
                         <img src="旅のしおり(写真)/観光/K-11-2.jpg" alt="観光">
                     </div>
                 </div>
+            </div>
+            <div class="spot-content" id="favorites" hidden>
+                <p class="favorites-empty">まだお気に入りが登録されていません。</p>
             </div>
         </section>
     </body>

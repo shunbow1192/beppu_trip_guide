@@ -173,3 +173,218 @@ body > h3 { margin: -10px 0 16px; color: var(--muted); font-size: 16px; font-wei
 .address-link:hover {
     opacity: 0.7;
 }
+
+
+/* 新幹線タイムライン */
+.train-timeline {
+  margin-top: 24px;
+  padding: 8px 0;
+}
+
+.train-stop {
+  display: grid;
+  grid-template-columns: 65px 20px 1fr;
+  column-gap: 15px;
+  min-height: 90px;
+}
+
+.train-time {
+  font-size: 16px;
+  font-weight: 700;
+  color: #203c50;
+  font-variant-numeric: tabular-nums;
+  padding-top: 1px;
+}
+
+.train-point {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.train-point::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #203c50;
+  z-index: 1;
+}
+
+.train-point::after {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 0;
+  width: 2px;
+  background: #c5d0d5;
+}
+
+.train-stop.last .train-point::before {
+  background: #b28a51;
+}
+
+.train-stop.last .train-point::after {
+  display: none;
+}
+
+.train-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-content: start;
+  gap: 3px 10px;
+  padding-bottom: 22px;
+}
+
+.train-info strong {
+  font-size: 17px;
+  color: #203c50;
+}
+
+.train-info span {
+  font-size: 12px;
+  color: #65717b;
+}
+
+.train-info small {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: #65717b;
+}
+
+/* スマホ表示 */
+@media (max-width: 600px) {
+  .train-stop {
+    grid-template-columns: 52px 16px 1fr;
+    column-gap: 10px;
+    min-height: 85px;
+  }
+
+  .train-time {
+    font-size: 14px;
+  }
+
+  .train-info strong {
+    font-size: 16px;
+  }
+}
+
+/* ==================================
+   お気に入り機能
+================================== */
+
+/* ジャンルタブを横スクロール可能にする */
+.spot-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 5px;
+}
+
+.spot-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.spot-btn {
+    flex: 0 0 auto;
+    min-width: 85px;
+    padding: 12px 15px;
+}
+
+/* 各スポット */
+.spot-content > div {
+    position: relative;
+}
+
+/* お気に入りボタン */
+.favorite-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e8e4dc;
+    border-radius: 50%;
+
+    background: #ffffff;
+    color: #9ca3af;
+
+    font-size: 23px;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+/* ホバー */
+.favorite-btn:hover {
+    transform: scale(1.1);
+    border-color: #b28a51;
+}
+
+/* 登録済み */
+.favorite-btn.is-favorite {
+    color: #d45b69;
+    background: #fff5f6;
+    border-color: #f3cbd0;
+}
+
+/* スポット名とボタンが重ならないように */
+.spot-content > div > h3 {
+    padding-right: 48px;
+}
+
+/* お気に入りがない場合 */
+.favorites-empty {
+    text-align: center;
+    color: #65717b;
+    padding: 35px 10px;
+    font-size: 14px;
+}
+
+/* スマホ */
+@media (max-width: 600px) {
+    .spot-btn {
+        min-width: 75px;
+        padding: 10px 12px;
+    }
+
+    .favorite-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 21px;
+    }
+}
+
+
+/* ジャンルボタンを3列×2行にする */
+.spot-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.spot-btn {
+  width: 100%;
+  min-width: 0;
+}
+
+/* スマホ表示 */
+@media (max-width: 600px) {
+  .spot-tabs {
+    gap: 8px;
+  }
+
+  .spot-btn {
+    padding: 12px 4px;
+    font-size: 12px;
+  }
+}
