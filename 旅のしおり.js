@@ -206,3 +206,237 @@ function renderFavorites() {
 // 初期表示
 updateFavoriteButtons();
 renderFavorites();
+
+
+/* ==================================
+   観光スポットに戻るボタン
+================================== */
+
+const backToTop = document.getElementById("back-to-top");
+const spotsHeading = document.getElementById("spots-heading");
+
+// 観光スポットの見出しを通過したら表示
+function updateBackToTop() {
+  const headingBottom =
+    spotsHeading.getBoundingClientRect().bottom;
+
+  backToTop.classList.toggle(
+    "show",
+    headingBottom < 0
+  );
+}
+
+// スクロール時に表示状態を更新
+window.addEventListener("scroll", updateBackToTop, {
+  passive: true
+});
+
+// 読み込み時にも確認
+updateBackToTop();
+
+// クリックすると観光スポットの見出しへ移動
+backToTop.addEventListener("click", () => {
+  spotsHeading.scrollIntoView({
+    behavior: window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches ? "instant" : "smooth",
+    block: "start"
+  });
+});
+
+
+/* ==================================
+   写真の拡大表示・切り替え機能
+================================== */
+
+// 拡大表示用の背景
+const photoLightbox = document.createElement("div");
+photoLightbox.className = "photo-lightbox";
+photoLightbox.hidden = true;
+photoLightbox.style.display = "none";
+
+// 拡大表示する写真
+const enlargedPhoto = document.createElement("img");
+enlargedPhoto.alt = "";
+
+// 閉じるボタン
+const lightboxClose = document.createElement("button");
+lightboxClose.className = "photo-lightbox-close";
+lightboxClose.type = "button";
+lightboxClose.textContent = "×";
+lightboxClose.setAttribute("aria-label", "写真を閉じる");
+
+// 前の写真ボタン
+const photoPrev = document.createElement("button");
+photoPrev.className =
+  "photo-lightbox-nav photo-lightbox-prev";
+photoPrev.type = "button";
+photoPrev.textContent = "‹";
+photoPrev.setAttribute("aria-label", "前の写真");
+
+// 次の写真ボタン
+const photoNext = document.createElement("button");
+photoNext.className =
+  "photo-lightbox-nav photo-lightbox-next";
+photoNext.type = "button";
+photoNext.textContent = "›";
+photoNext.setAttribute("aria-label", "次の写真");
+
+// 枚数表示
+const photoCounter = document.createElement("div");
+photoCounter.className = "photo-lightbox-counter";
+
+// 要素を追加
+photoLightbox.appendChild(enlargedPhoto);
+photoLightbox.appendChild(lightboxClose);
+photoLightbox.appendChild(photoPrev);
+photoLightbox.appendChild(photoNext);
+photoLightbox.appendChild(photoCounter);
+document.body.appendChild(photoLightbox);
+
+// 現在表示している写真グループ
+let lightboxPhotos = [];
+let lightboxIndex = 0;
+
+// 開く前のスクロール設定を保存
+let previousBodyOverflow = "";
+
+// 写真を更新
+function updateLightboxPhoto() {
+  const img = lightboxPhotos[lightboxIndex];
+  if (!img) return;
+
+  enlargedPhoto.src = img.currentSrc || img.src;
+  enlargedPhoto.alt = img.alt || "";
+
+  // 枚数表示
+  photoCounter.textContent =
+    `${lightboxIndex + 1} / ${lightboxPhotos.length}`;
+
+  // 1枚だけなら矢印を非表示
+  const hasMultiple = lightboxPhotos.length > 1;
+  photoPrev.disabled = !hasMultiple;
+  photoNext.disabled = !hasMultiple;
+}
+
+// 写真を拡大する
+function openPhotoLightbox(img) {
+  // タップした写真と同じスライダー内の写真を取得
+  const slider = img.closest(".photo-slider");
+
+  lightboxPhotos = Array.from(
+    slider.querySelectorAll("img")
+  );
+
+  lightboxIndex = lightboxPhotos.indexOf(img);
+
+  if (lightboxIndex < 0) lightboxIndex = 0;
+
+  updateLightboxPhoto();
+
+  photoLightbox.hidden = false;
+  photoLightbox.style.display = "flex";
+
+  previousBodyOverflow = document.body.style.overflow;
+  document.body.style.overflow = "hidden";
+}
+
+// 拡大表示を閉じる
+function closePhotoLightbox() {
+  photoLightbox.hidden = true;
+  photoLightbox.style.display = "none";
+
+  document.body.style.overflow = previousBodyOverflow;
+}
+
+// 次・前の写真へ切り替え
+function changeLightboxPhoto(direction) {
+  if (lightboxPhotos.length <= 1) return;
+
+  lightboxIndex =
+    (lightboxIndex + direction + lightboxPhotos.length)
+    % lightboxPhotos.length;
+
+  updateLightboxPhoto();
+}
+
+// 写真をクリックしたら拡大
+document.addEventListener("click", (event) => {
+  const img = event.target.closest(".photo-slider img");
+
+  if (img) {
+    openPhotoLightbox(img);
+  }
+});
+
+// 左右ボタン
+photoPrev.addEventListener("click", () => {
+  changeLightboxPhoto(-1);
+});
+
+photoNext.addEventListener("click", () => {
+  changeLightboxPhoto(1);
+});
+
+// ×ボタン
+lightboxClose.addEventListener("click", closePhotoLightbox);
+
+// 背景タップで閉じる
+photoLightbox.addEventListener("click", (event) => {
+  if (event.target === photoLightbox) {
+    closePhotoLightbox();
+  }
+});
+
+// キーボード操作
+document.addEventListener("keydown", (event) => {
+  if (photoLightbox.hidden) return;
+
+  if (event.key === "Escape") {
+    closePhotoLightbox();
+  }
+
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    changeLightboxPhoto(-1);
+  }
+
+  if (event.key === "ArrowRight") {
+    event.preventDefault();
+    changeLightboxPhoto(1);
+  }
+});
+
+// スマホのスワイプ操作
+let touchStartX = 0;
+let touchStartY = 0;
+
+photoLightbox.addEventListener("touchstart", (event) => {
+  if (event.touches.length !== 1) return;
+
+  touchStartX = event.touches[0].clientX;
+  touchStartY = event.touches[0].clientY;
+}, { passive: true });
+
+photoLightbox.addEventListener("touchend", (event) => {
+  if (photoLightbox.hidden) return;
+  if (event.changedTouches.length !== 1) return;
+
+  const touchEndX = event.changedTouches[0].clientX;
+  const touchEndY = event.changedTouches[0].clientY;
+
+  const diffX = touchEndX - touchStartX;
+  const diffY = touchEndY - touchStartY;
+
+  // 横方向に50px以上動いた場合だけ切り替え
+  if (
+    Math.abs(diffX) > 50 &&
+    Math.abs(diffX) > Math.abs(diffY)
+  ) {
+    if (diffX < 0) {
+      changeLightboxPhoto(1);
+    } else {
+      changeLightboxPhoto(-1);
+    }
+  }
+}, { passive: true });

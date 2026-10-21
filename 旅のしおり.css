@@ -407,3 +407,219 @@ body > h3 { margin: -10px 0 16px; color: var(--muted); font-size: 16px; font-wei
 #return .train-stop:first-child .train-point::before {
   background: #b28a51;
 }
+
+
+/* ==================================
+   ページ上部に戻るボタン
+================================== */
+
+#back-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+
+  width: 48px;
+  height: 48px;
+
+  border: 1px solid #b28a51;
+  border-radius: 50%;
+
+  background: #203c50;
+  color: #ffffff;
+
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+
+  transition: opacity 0.3s ease,
+              transform 0.3s ease,
+              visibility 0.3s ease;
+}
+
+/* スクロールすると表示 */
+#back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ホバー時 */
+#back-to-top:hover {
+  background: #b28a51;
+}
+
+/* スマホ表示 */
+@media (max-width: 600px) {
+  #back-to-top {
+    width: 44px;
+    height: 44px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 22px;
+  }
+}
+
+
+/* ==================================
+   写真の拡大表示
+================================== */
+
+/* 写真をタップできることを示す */
+.photo-slider img {
+  cursor: zoom-in;
+}
+
+/* 拡大表示の背景 */
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px 20px 30px;
+
+  background: rgba(10, 20, 30, 0.92);
+}
+
+/* 拡大した写真 */
+.photo-lightbox img {
+  display: block;
+  max-width: 100%;
+  max-height: 85vh;
+  max-height: 85dvh;
+
+  width: auto;
+  height: auto;
+  object-fit: contain;
+
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 閉じるボタン */
+.photo-lightbox-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+
+  width: 44px;
+  height: 44px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ボタンに触れたとき */
+.photo-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* スマホ表示 */
+@media (max-width: 600px) {
+  .photo-lightbox {
+    padding: 60px 10px 20px;
+  }
+
+  .photo-lightbox img {
+    max-width: 100%;
+    max-height: 80vh;
+    max-height: 80dvh;
+  }
+}
+
+
+/* ==================================
+   拡大写真の切り替え機能
+================================== */
+
+/* 左右の切り替えボタン */
+.photo-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+
+  width: 44px;
+  height: 44px;
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+
+  background: rgba(20, 35, 50, 0.7);
+  color: #ffffff;
+
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.photo-lightbox-prev {
+  left: 15px;
+}
+
+.photo-lightbox-next {
+  right: 15px;
+}
+
+.photo-lightbox-nav:hover {
+  background: #b28a51;
+}
+
+/* 写真の枚数表示 */
+.photo-lightbox-counter {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 6px 14px;
+  border-radius: 20px;
+
+  background: rgba(20, 35, 50, 0.7);
+  color: #ffffff;
+
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+/* スマホではスワイプ操作を優先 */
+.photo-lightbox img {
+  touch-action: pan-y;
+}
+
+/* 写真が1枚のときは切り替えボタンを非表示 */
+.photo-lightbox-nav:disabled {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .photo-lightbox-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+  }
+
+  .photo-lightbox-prev {
+    left: 5px;
+  }
+
+  .photo-lightbox-next {
+    right: 5px;
+  }
+}
